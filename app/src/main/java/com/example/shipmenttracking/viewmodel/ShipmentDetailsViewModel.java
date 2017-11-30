@@ -2,6 +2,7 @@ package com.example.shipmenttracking.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import com.example.shipmenttracking.RepoModule;
 import com.example.shipmenttracking.components.DaggerRepoComponent;
@@ -30,11 +31,12 @@ public class ShipmentDetailsViewModel extends ViewModel {
     }
 
     public void init(String trackingId) {
-        if (this.shipment != null) {
-            // ViewModel is created per Fragment so
-            // we know the userId won't change
-            return;
-        }
+//        if (this.shipment != null) {
+//            // ViewModel is created per Fragment so
+//            // we know the userId won't change
+//            return;
+//        }
+        Log.e("ViewModel","New Shipment object created");
         shipment = shipmentRepo.getShipment(trackingId);
     }
 
