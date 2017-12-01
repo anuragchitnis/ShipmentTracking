@@ -26,15 +26,14 @@ import retrofit2.Response;
 @Singleton
 public class ShipmentRepository {
 
-    private WebServiceComponent webServiceComponent;
-
     @Inject
     public ShipmentAPI shipmentAPI;
     // simple in memory cache, details omitted for brevity
     private HashMap<String, MutableLiveData> userCache = new HashMap<>();
 
+    @Inject
     public ShipmentRepository(String baseUrl) {
-        webServiceComponent = DaggerWebServiceComponent.builder()
+        WebServiceComponent webServiceComponent = DaggerWebServiceComponent.builder()
                 .webServiceModule(new WebServiceModule(baseUrl))
                 .build();
         webServiceComponent.inject(this);

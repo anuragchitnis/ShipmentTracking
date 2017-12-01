@@ -1,7 +1,7 @@
 package com.example.shipmenttracking.components;
 
 import com.example.shipmenttracking.RepoModule;
-import com.example.shipmenttracking.viewmodel.ShipmentDetailsViewModel;
+import com.example.shipmenttracking.viewmodel.ShipmentViewModel;
 
 import javax.inject.Singleton;
 
@@ -16,5 +16,5 @@ import dagger.Component;
 @Singleton
 @Component(modules={RepoModule.class})
 public interface RepoComponent {
-    void inject(ShipmentDetailsViewModel shipmentDetailsViewModel);
+    void inject(ShipmentViewModel shipmentViewModel);
 }

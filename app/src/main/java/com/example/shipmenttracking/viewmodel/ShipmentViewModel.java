@@ -2,7 +2,6 @@ package com.example.shipmenttracking.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
 import com.example.shipmenttracking.RepoModule;
 import com.example.shipmenttracking.components.DaggerRepoComponent;
@@ -16,31 +15,31 @@ import javax.inject.Inject;
  * Created by anura on 11/21/2017.
  */
 
-public class ShipmentDetailsViewModel extends ViewModel {
+public class ShipmentViewModel extends ViewModel {
     private LiveData<Shipment> shipment;
-    private RepoComponent repoComponent;
-
     @Inject
     public ShipmentRepository shipmentRepo;
 
-    public ShipmentDetailsViewModel() {
-        repoComponent = DaggerRepoComponent.builder()
+    public ShipmentViewModel() {
+        RepoComponent repoComponent = DaggerRepoComponent.builder()
                 .repoModule(new RepoModule())
                 .build();
         repoComponent.inject(this);
     }
 
-    public void init(String trackingId) {
-//        if (this.shipment != null) {
-//            // ViewModel is created per Fragment so
-//            // we know the userId won't change
-//            return;
-//        }
-        Log.e("ViewModel","New Shipment object created");
-        shipment = shipmentRepo.getShipment(trackingId);
+    @Inject
+    public ShipmentViewModel(ShipmentRepository shipmentRepo) {
+        this();
+        this.shipmentRepo = shipmentRepo;
     }
 
-    public LiveData<Shipment> getShipment() {
-        return this.shipment;
+    public LiveData<Shipment> getShipment(String trackingId) {
+        if(shipment != null) {
+            return this.shipment;
+        } else {
+//            Log.e("ViewModel","New Shipment object created");
+            shipment = shipmentRepo.getShipment(trackingId);
+            return shipment;
+        }
     }
 }

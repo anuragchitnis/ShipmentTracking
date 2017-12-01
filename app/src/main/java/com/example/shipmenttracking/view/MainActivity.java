@@ -8,11 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.shipmenttracking.R;
-import com.example.shipmenttracking.viewmodel.ShipmentDetailsViewModel;
+import com.example.shipmenttracking.viewmodel.ShipmentViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ShipmentDetailsViewModel viewModel;
+    private ShipmentViewModel viewModel;
     private TextView trackingNumberText;
     private TextView timestampText;
     private TextView shipmentCreateDateText;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewModel = ViewModelProviders.of(this).get(ShipmentDetailsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ShipmentViewModel.class);
 
         trackingNumberText = (TextView) findViewById(R.id.trackingNumber);
         timestampText = (TextView) findViewById(R.id.timestamp);
@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         submitButton.setOnClickListener((view) -> {
             //"220088641150"
-            viewModel.init(trackingIdEditText.getText().toString());
-            viewModel.getShipment().observe(this, shipment ->
+            viewModel.getShipment(trackingIdEditText.getText().toString()).observe(this, shipment ->
             {
                 trackingNumberText.setText(shipment.getTrackingNumber());
                 timestampText.setText(String.valueOf(shipment.getTimestamp()));

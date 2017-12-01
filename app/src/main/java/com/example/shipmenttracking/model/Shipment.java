@@ -10,6 +10,17 @@ public class Shipment {
     private long timestamp;
     private long shipmentCreateDate;
 
+    public Shipment() {
+
+        //Zero Argument constructor needed for retrofit
+    }
+
+    public Shipment(String trackingNumber, long timestamp, long shipmentCreateDate) {
+        this.trackingNumber = trackingNumber;
+        this.timestamp = timestamp;
+        this.shipmentCreateDate = shipmentCreateDate;
+    }
+
     public String getTrackingNumber() {
         return trackingNumber;
     }
