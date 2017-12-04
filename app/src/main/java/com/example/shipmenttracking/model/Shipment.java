@@ -46,6 +46,26 @@ public class Shipment {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Shipment shipment = (Shipment) o;
+
+        if (timestamp != shipment.timestamp) return false;
+        if (shipmentCreateDate != shipment.shipmentCreateDate) return false;
+        return trackingNumber.equals(shipment.trackingNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = trackingNumber.hashCode();
+        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
+        result = 31 * result + (int) (shipmentCreateDate ^ (shipmentCreateDate >>> 32));
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Shipment{" +
                 "trackingNumber='" + trackingNumber + '\'' +

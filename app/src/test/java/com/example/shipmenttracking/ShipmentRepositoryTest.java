@@ -1,11 +1,14 @@
 package com.example.shipmenttracking;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.LiveData;
+
 import com.example.shipmenttracking.model.Shipment;
 import com.example.shipmenttracking.repository.ShipmentRepository;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -17,11 +20,16 @@ import java.net.URL;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
+import static junit.framework.Assert.assertEquals;
+
 /**
  * Created by anura on 11/22/2017.
  */
 
 public class ShipmentRepositoryTest {
+
+    @Rule
+    public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
     private MockWebServer server;
     private ShipmentRepository shipmentRepository;
@@ -43,8 +51,14 @@ public class ShipmentRepositoryTest {
                 .setResponseCode(200)
                 .setBody(body));
 
-        LiveData<Shipment> liveData = shipmentRepository.getShipment("220088641150");
-        Shipment shipment = liveData.getValue();
+        LiveData<Shipment> liveData = shipmentRepository.getShipment("220088641155");
+        Shipment givenShipment = new Shipment("220088641155", 151135791,150147720);
+        Shipment receivedShipment =  liveData.getValue();
+
+        while (receivedShipment != null) {
+            assertEquals(givenShipment, receivedShipment);
+        }
+
     }
 
     String readFile(File fileName) throws IOException {

@@ -49,7 +49,10 @@ public class MainActivityTest {
     @Test
     public void loading() {
         Shipment shipment = new Shipment("123456789", 12456789,123456789);
-        shipmentLiveData.setValue(shipment);
+        activityRule.getActivity().runOnUiThread(()-> {
+            shipmentLiveData.setValue(shipment);
+        });
+
 
         onView(withId(R.id.submitButton))
                 .perform(click());
